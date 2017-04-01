@@ -24,7 +24,7 @@ SECRET_KEY = '8cd-j&jo=-#ecd1jjulp_s*7y$n4tad(0d_g)l=6@n^r8fg3rn'
 
 DEBUG = os.environ.get("JUNTAGRICO_DEBUG", "True")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['juntagrico-demo.herokuapp.com', ]
 
 
 # Application definition
