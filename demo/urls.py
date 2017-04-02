@@ -20,6 +20,6 @@ import juntagrico
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('juntagrico.urls')),
-    url(r'^', juntagrico.views.home),
+    url(r'^$', juntagrico.views.home),
     url(r'^impersonate/', include('impersonate.urls')),
 ]
