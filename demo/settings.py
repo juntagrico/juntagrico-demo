@@ -132,7 +132,7 @@ if DEBUG is True:
             
 
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticbla')
 STATIC_URL = '/static/'
 
 GOOGLE_API_KEY =  os.environ.get("GOOGLE_API_KEY")
