@@ -24,7 +24,7 @@ SECRET_KEY = '8cd-j&jo=-#ecd1jjulp_s*7y$n4tad(0d_g)l=6@n^r8fg3rn'
 
 DEBUG = os.environ.get("JUNTAGRICO_DEBUG", "True")
 
-ALLOWED_HOSTS = ['juntagrico-demo.herokuapp.com', ]
+ALLOWED_HOSTS = ['juntagrico-demo.herokuapp.com', 'localhost',]
 
 
 # Application definition
@@ -46,8 +46,8 @@ ROOT_URLCONF = 'demo.urls'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('JUNTAGRICO_DATABASE_ENGINE'), # 'django.db.backends.postgresql_psycopg2', #'django.db.backends.sqlite3', # Add , 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': os.environ.get('JUNTAGRICO_DATABASE_NAME'), #''junatagrico', # 'db.sqlite',                      # Or path to database file if using sqlite3.
+        'ENGINE': os.environ.get('JUNTAGRICO_DATABASE_ENGINE','django.db.backends.sqlite3'), # 'django.db.backends.postgresql_psycopg2', #'django.db.backends.sqlite3', # Add , 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': os.environ.get('JUNTAGRICO_DATABASE_NAME','demo.db'), #''junatagrico', # 'db.sqlite',                      # Or path to database file if using sqlite3.
         'USER': os.environ.get('JUNTAGRICO_DATABASE_USER'), #''junatagrico', # The following settings are not used with sqlite3:
         'PASSWORD': os.environ.get('JUNTAGRICO_DATABASE_PASSWORD'), #''junatagrico',
         'HOST': os.environ.get('JUNTAGRICO_DATABASE_HOST'), #'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
@@ -152,4 +152,5 @@ AWS_S3_FILE_OVERWRITE = False
 MEDIA_ROOT = 'media'
 MEDIA_URL = 'https://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 
-DEMO = True
+DEMO_USER = '(admin)'
+DEMO_PWD = '(admin)'
