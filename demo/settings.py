@@ -135,6 +135,8 @@ if DEBUG is True:
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = "/my/home"
+
 GOOGLE_API_KEY =  os.environ.get("GOOGLE_API_KEY")
 IMPERSONATE_REDIRECT_URL = "/my/profil"
 
