@@ -101,13 +101,16 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE=[
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    #'subdomains.middleware.SubdomainURLRoutingMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-)
+    'impersonate.middleware.ImpersonateMiddleware'
+]
 
 EMAIL_HOST = os.environ.get('JUNTAGRICO_EMAIL_HOST')
 EMAIL_HOST_USER = os.environ.get('JUNTAGRICO_EMAIL_USER')
@@ -138,7 +141,9 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = "/my/home"
 
 GOOGLE_API_KEY =  os.environ.get("GOOGLE_API_KEY")
-IMPERSONATE_REDIRECT_URL = "/my/profil"
+IMPERSONATE = {
+    'REDIRECT_URL': '/my/profile',
+}
 
 DEFAULT_FILE_STORAGE = 'demo.utils.MediaS3BotoStorage'
 try:
