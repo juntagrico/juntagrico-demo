@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'juntagrico',
     'impersonate',
+    'juntagrico',
+    'crispy_forms',
     'demo',
 ]
 
@@ -71,7 +72,6 @@ TEMPLATES = [
             'loaders': [
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
-                'juntagrico.personalisation.loaders.personal_directories.Loader'
             ],
             'debug' : True
         },
@@ -133,7 +133,8 @@ if DEBUG is True:
         if key.startswith("JUNTAGRICO_EMAIL_WHITELISTED"):
             whitelist_email_from_env(key)
             
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_FAIL_SILENTLY = not DEBUG
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
