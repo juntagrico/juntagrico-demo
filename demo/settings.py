@@ -81,7 +81,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'demo.wsgi.application'
 
 
-LANGUAGE_CODE = 'it'
+LANGUAGE_CODE = 'de'
 
 SITE_ID = 1
 
