@@ -169,5 +169,5 @@ SERVER_URL = "www.demo.org"
 ADMINPORTAL_NAME = "demo"
 ADMINPORTAL_SERVER_URL = "demo.juntagrico.science"
 STYLE_SHEET = "/static/demo/css/customize.css"
-DEMO_USER='admin'
-DEMO_PWD='admin'
+DEMO_USER='(Benutzername ist "admin")'
+DEMO_PWD='(Passwort ist "admin")'
