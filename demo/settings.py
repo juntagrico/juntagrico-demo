@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'adminsortable2',
     'demo',
+    'polymorphic',
 ]
 
 ROOT_URLCONF = 'demo.urls'
@@ -99,7 +100,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'impersonate.middleware.ImpersonateMiddleware'
+    'impersonate.middleware.ImpersonateMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware'
 ]
 
 EMAIL_HOST = os.environ.get('JUNTAGRICO_EMAIL_HOST')
@@ -110,6 +112,7 @@ EMAIL_USE_TLS = os.environ.get('JUNTAGRICO_EMAIL_TLS', 'False')=='True'
 EMAIL_USE_SSL = os.environ.get('JUNTAGRICO_EMAIL_SSL', 'False')=='True'
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
 WHITELIST_EMAILS = []
 
@@ -167,8 +170,6 @@ SHARE_PRICE = "0"
 
 INFO_EMAIL = "info@juntagrico.org"
 SERVER_URL = "www.demo.org"
-ADMINPORTAL_NAME = "demo"
-ADMINPORTAL_SERVER_URL = "demo.juntagrico.science"
-STYLE_SHEET = "/static/demo/css/customize.css"
+STYLES = {'static': ['/static/demo/css/customize.css']}
 DEMO_USER='(Benutzername ist "admin")'
 DEMO_PWD='(Passwort ist "admin")'
