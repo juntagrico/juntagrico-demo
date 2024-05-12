@@ -27,11 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'demo',
     'juntagrico',
+    'fontawesomefree',
+    'import_export',
     'impersonate',
     'crispy_forms',
     'adminsortable2',
-    'demo',
     'polymorphic',
 ]
 
@@ -86,7 +88,10 @@ USE_I18N = True
 # calendars according to the current locale.
 USE_L10N = True
 
-DATE_INPUT_FORMATS =['%d.%m.%Y',]
+DATE_INPUT_FORMATS = ['%d.%m.%Y',]
+
+USE_TZ = True
+TIME_ZONE = 'Europe/Zurich'
 
 AUTHENTICATION_BACKENDS = (
     'juntagrico.util.auth.AuthenticateWithEmail',
@@ -112,7 +117,15 @@ EMAIL_USE_TLS = os.environ.get('JUNTAGRICO_EMAIL_TLS', 'False')=='True'
 EMAIL_USE_SSL = os.environ.get('JUNTAGRICO_EMAIL_SSL', 'False')=='True'
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+    },
+}
 
 WHITELIST_EMAILS = []
 
@@ -136,7 +149,9 @@ IMPERSONATE = {
     'REDIRECT_URL': '/my/profile',
 }
 
-LOGIN_REDIRECT_URL = "/my/home"
+LOGIN_REDIRECT_URL = "/"
+
+IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'view'
 
 """
     File & Storage Settings
@@ -168,8 +183,13 @@ ORGANISATION_BANK_CONNECTION = {"PC" : "1",
             "ESR" : ""}
 SHARE_PRICE = "0"
 
-INFO_EMAIL = "info@juntagrico.org"
-SERVER_URL = "www.demo.org"
+CONTACTS = {
+    "general": "info@juntagrico.org"
+}
+ORGANISATION_WEBSITE = {
+    'name': "www.demo.org",
+    'url': "https://www.demo.org"
+}
 STYLES = {'static': ['/static/demo/css/customize.css']}
 DEMO_USER='(Benutzername ist "admin")'
 DEMO_PWD='(Passwort ist "admin")'
