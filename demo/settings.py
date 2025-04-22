@@ -1,18 +1,19 @@
 """
 Django settings for demo project.
 """
-
 import os
+from pathlib import Path
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# core settings
 
-# SECURITY WARNING: keep the secret key used in production secret!
+DEBUG = os.environ.get('JUNTAGRICO_DEBUG', False)
+
+ALLOWED_HOSTS = ['demo.juntagrico.science',]
+
 SECRET_KEY = os.environ.get('JUNTAGRICO_SECRET_KEY')
-
-DEBUG = True
 
 LOGGING = {
     'version': 1,
@@ -34,11 +35,6 @@ LOGGING = {
     },
 }
 
-ALLOWED_HOSTS = ['demo.juntagrico.science']
-
-
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,29 +46,51 @@ INSTALLED_APPS = [
     'demo',
     'juntagrico',
     'fontawesomefree',
-    'import_export',
     'impersonate',
     'crispy_forms',
     'adminsortable2',
     'polymorphic',
+    'import_export',
 ]
-
-ROOT_URLCONF = 'demo.urls'
 
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('JUNTAGRICO_DATABASE_ENGINE','django.db.backends.sqlite3'), 
         'NAME': os.environ.get('JUNTAGRICO_DATABASE_NAME','demo.db'), 
-        'USER': os.environ.get('JUNTAGRICO_DATABASE_USER'), #''junatagrico', # The following settings are not used with sqlite3:
-        'PASSWORD': os.environ.get('JUNTAGRICO_DATABASE_PASSWORD'), #''junatagrico',
-        'HOST': os.environ.get('JUNTAGRICO_DATABASE_HOST'), #'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': os.environ.get('JUNTAGRICO_DATABASE_PORT', False), #''', # Set to empty string for default.
+        'USER': os.environ.get('JUNTAGRICO_DATABASE_USER'),
+        'PASSWORD': os.environ.get('JUNTAGRICO_DATABASE_PASSWORD'),
+        'HOST': os.environ.get('JUNTAGRICO_DATABASE_HOST'),
+        'PORT': os.environ.get('JUNTAGRICO_DATABASE_PORT', False),
     }
+}
+
+EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
+
+ROOT_URLCONF = 'demo.urls'
+
+MIDDLEWARE = [
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'impersonate.middleware.ImpersonateMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware'
+]
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+    },
 }
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
@@ -85,11 +103,6 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'juntagrico.context_processors.vocabulary',
             ],
-            'loaders': [
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader'
-            ],
-            'debug' : True
         },
     },
 ]
@@ -97,120 +110,91 @@ TEMPLATES = [
 WSGI_APPLICATION = 'demo.wsgi.application'
 
 
-LANGUAGE_CODE = 'de'
+# Language etc.
 
-SITE_ID = 1
-
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
 USE_I18N = True
-
-# If you set this to False, Django will not format dates, numbers and
-# calendars according to the current locale.
 USE_L10N = True
-
+LANGUAGE_CODE = 'de'
 DATE_INPUT_FORMATS = ['%d.%m.%Y',]
 
 USE_TZ = True
 TIME_ZONE = 'Europe/Zurich'
+
+
+# auth settings
 
 AUTHENTICATION_BACKENDS = (
     'juntagrico.util.auth.AuthenticateWithEmail',
     'django.contrib.auth.backends.ModelBackend'
 )
 
+LOGIN_REDIRECT_URL = "/"
 
-MIDDLEWARE = [
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'impersonate.middleware.ImpersonateMiddleware',
-    'django.contrib.sites.middleware.CurrentSiteMiddleware'
-]
 
-EMAIL_HOST = os.environ.get('JUNTAGRICO_EMAIL_HOST')
-EMAIL_HOST_USER = os.environ.get('JUNTAGRICO_EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('JUNTAGRICO_EMAIL_PASSWORD')
-EMAIL_PORT = int(os.environ.get('JUNTAGRICO_EMAIL_PORT', '25' ))
-EMAIL_USE_TLS = os.environ.get('JUNTAGRICO_EMAIL_TLS', 'False')=='True'
-EMAIL_USE_SSL = os.environ.get('JUNTAGRICO_EMAIL_SSL', 'False')=='True'
+# site settings
+
+SITE_ID = 1
+
+
+# Static Files Settings
+
+STATIC_ROOT = BASE_DIR / 'static'
+STATIC_URL = '/static/'
+
+
+# session settings
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
-    },
-}
 
-WHITELIST_EMAILS = []
-
-def whitelist_email_from_env(var_env_name):
-    email = os.environ.get(var_env_name)
-    if email:
-        WHITELIST_EMAILS.append(email.replace('@gmail.com', '(\+\S+)?@gmail.com'))
-
-
-if DEBUG is True:
-    for key in os.environ.keys():
-        if key.startswith("JUNTAGRICO_EMAIL_WHITELISTED"):
-            whitelist_email_from_env(key)
-            
-
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
+# impersonate settings
 
 IMPERSONATE = {
     'REDIRECT_URL': '/my/profile',
 }
 
-LOGIN_REDIRECT_URL = "/"
+
+# import export settings
 
 IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'view'
 
-"""
-    File & Storage Settings
-"""
-ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
-MEDIA_ROOT = 'media'
+# crispy forms settings
 
-"""
-     Crispy Settings
-"""
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-"""
-     juntagrico Settings
-"""
+
+# juntagrico settings
+
 ORGANISATION_NAME = "Demo Solawi (nicht echt Anmeldung nicht verbindlich)"
 ORGANISATION_LONG_NAME = "Demo Solawi (nicht echt Anmeldung nicht verbindlich)"
-ORGANISATION_ADDRESS = {"name":"Demo Solawi (nicht echt Anmeldung nicht verbindlich)", 
-            "street" : "FakeStreet",
-            "number" : "123",
-            "zip" : "1234",
-            "city" : "Niemansland",
-            "extra" : ""}
-ORGANISATION_BANK_CONNECTION = {"PC" : "1",
-            "IBAN" : "IBAN",
-            "BIC" : "BIC",
-            "NAME" : "Geldspeicher",
-            "ESR" : ""}
-SHARE_PRICE = "0"
-
-CONTACTS = {
-    "general": "info@juntagrico.org"
+ORGANISATION_ADDRESS = {
+    "name":"Demo Solawi (nicht echt Anmeldung nicht verbindlich)",
+    "street" : "FakeStreet",
+    "number" : "123",
+    "zip" : "1234",
+    "city" : "Niemansland",
+    "extra" : ""
+}
+ORGANISATION_BANK_CONNECTION = {
+    "PC" : "1",
+    "IBAN" : "IBAN",
+    "BIC" : "BIC",
+    "NAME" : "Geldspeicher",
+    "ESR" : ""
 }
 ORGANISATION_WEBSITE = {
     'name': "www.demo.org",
     'url': "https://www.demo.org"
 }
+
+CONTACTS = {
+    "general": "info@juntagrico.org"
+}
+
+SHARE_PRICE = "0"
+
 STYLES = {'static': ['/static/demo/css/customize.css']}
+
 DEMO_USER='(Benutzername ist "admin")'
 DEMO_PWD='(Passwort ist "admin")'
