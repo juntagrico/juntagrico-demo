@@ -196,7 +196,7 @@ CONTACTS = {
 
 SHARE_PRICE = "0"
 
-STYLES = {'static': ['/static/demo/css/customize.css']}
+STYLES = {'static': ['demo/css/customize.css']}
 
 DEMO_USER='(Benutzername ist "admin")'
 DEMO_PWD='(Passwort ist "admin")'
