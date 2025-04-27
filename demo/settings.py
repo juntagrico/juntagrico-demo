@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # core settings
 
-DEBUG = os.environ.get('JUNTAGRICO_DEBUG', False)
+DEBUG = os.environ.get("JUNTAGRICO_DEBUG", 'False')=='True'
 
 if not DEBUG:
     ALLOWED_HOSTS = ['demo.juntagrico.science',]
