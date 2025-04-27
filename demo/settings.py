@@ -11,7 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 DEBUG = os.environ.get('JUNTAGRICO_DEBUG', False)
 
-ALLOWED_HOSTS = ['demo.juntagrico.science',]
+if not DEBUG:
+    ALLOWED_HOSTS = ['demo.juntagrico.science',]
 
 SECRET_KEY = os.environ.get('JUNTAGRICO_SECRET_KEY')
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'demo',
+    'juntagrico_billing',
     'juntagrico',
     'fontawesomefree',
     'impersonate',
@@ -198,3 +200,7 @@ STYLES = {'static': ['/static/demo/css/customize.css']}
 
 DEMO_USER='(Benutzername ist "admin")'
 DEMO_PWD='(Passwort ist "admin")'
+
+# juntagrico billing setting
+
+BILLS_USERMENU = True
