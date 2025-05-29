@@ -204,3 +204,10 @@ DEMO_PWD='(Passwort ist "admin")'
 # juntagrico billing setting
 
 BILLS_USERMENU = True
+
+
+# Test mode
+TEST_MODE = os.environ.get("JUNTAGRICO_TEST_MODE", 'False')=='True'
+
+if TEST_MODE:
+    INSTALLED_APPS.append('testmode')
