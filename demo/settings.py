@@ -8,15 +8,17 @@ from juntagrico import defaults
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# core settings
+SECRET_KEY = os.environ.get('JUNTAGRICO_SECRET_KEY')
 
 DEBUG = os.environ.get("JUNTAGRICO_DEBUG", 'False')=='True'
 
 if not DEBUG:
     ALLOWED_HOSTS = ['demo.juntagrico.science',]
 
-SECRET_KEY = os.environ.get('JUNTAGRICO_SECRET_KEY')
+ADMINS = (
+    ('Admin', os.environ.get('JUNTAGRICO_ADMIN_EMAIL')),
+)
+MANAGERS = ADMINS
 
 LOGGING = {
     'version': 1,
@@ -37,6 +39,8 @@ LOGGING = {
         },
     },
 }
+
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -60,39 +64,7 @@ INSTALLED_APPS = [
     'djrichtextfield',
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': os.environ.get('JUNTAGRICO_DATABASE_ENGINE','django.db.backends.sqlite3'), 
-        'NAME': os.environ.get('JUNTAGRICO_DATABASE_NAME','demo.db'), 
-        'USER': os.environ.get('JUNTAGRICO_DATABASE_USER'),
-        'PASSWORD': os.environ.get('JUNTAGRICO_DATABASE_PASSWORD'),
-        'HOST': os.environ.get('JUNTAGRICO_DATABASE_HOST'),
-        'PORT': os.environ.get('JUNTAGRICO_DATABASE_PORT', False),
-    }
-}
-
-EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
-
 ROOT_URLCONF = 'demo.urls'
-
-MIDDLEWARE = [
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'impersonate.middleware.ImpersonateMiddleware',
-    'django.contrib.sites.middleware.CurrentSiteMiddleware'
-]
-
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
-    },
-}
 
 TEMPLATES = [
     {
@@ -116,19 +88,69 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'demo.wsgi.application'
 
+# HTTP
 
-# Language etc.
+MIDDLEWARE = [
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'impersonate.middleware.ImpersonateMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware'
+]
+
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': os.environ.get('JUNTAGRICO_DATABASE_ENGINE','django.db.backends.sqlite3'), 
+        'NAME': os.environ.get('JUNTAGRICO_DATABASE_NAME','demo.db'), 
+        'USER': os.environ.get('JUNTAGRICO_DATABASE_USER'),
+        'PASSWORD': os.environ.get('JUNTAGRICO_DATABASE_PASSWORD'),
+        'HOST': os.environ.get('JUNTAGRICO_DATABASE_HOST'),
+        'PORT': os.environ.get('JUNTAGRICO_DATABASE_PORT', False),
+    }
+}
+
+# Email
+# Disabled in Demo
+EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
+
+
+# Internationalization
+# https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 USE_I18N = True
 USE_L10N = True
 LANGUAGE_CODE = 'de'
 DATE_INPUT_FORMATS = ['%d.%m.%Y',]
 
-USE_TZ = True
 TIME_ZONE = 'Europe/Zurich'
+USE_TZ = True
 
+# Static files (CSS, JavaScript, Images)
+# django.contrib.staticfiles
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-# auth settings
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'static'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+    },
+}
+
+# django.contrib.sites Settings
+
+SITE_ID = 1
+
+# django.contrib.auth Settings
 
 AUTHENTICATION_BACKENDS = (
     'juntagrico.util.auth.AuthenticateWithEmail',
@@ -138,17 +160,6 @@ AUTHENTICATION_BACKENDS = (
 LOGIN_REDIRECT_URL = "/"
 
 
-# site settings
-
-SITE_ID = 1
-
-
-# Static Files Settings
-
-STATIC_ROOT = BASE_DIR / 'static'
-STATIC_URL = '/static/'
-
-
 # impersonate settings
 
 IMPERSONATE = {
@@ -156,18 +167,20 @@ IMPERSONATE = {
 }
 
 
+# crispy forms settings
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
 # import export settings
 
 IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'view'
 
 
-# crispy forms settings
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 # Rich text editor settings
 
 DJRICHTEXTFIELD_CONFIG = defaults.richtextfield_config(LANGUAGE_CODE)
+
 
 # juntagrico settings
 
@@ -201,8 +214,10 @@ SHARE_PRICE = "0"
 
 STYLES = {'static': ['demo/css/customize.css']}
 
+# Demo Settings
 DEMO_USER='(Benutzername ist "admin")'
 DEMO_PWD='(Passwort ist "admin")'
+
 
 # juntagrico billing setting
 
