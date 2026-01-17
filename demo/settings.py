@@ -4,6 +4,8 @@ Django settings for demo project.
 import os
 from pathlib import Path
 
+from juntagrico import defaults
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -50,9 +52,12 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'impersonate',
     'crispy_forms',
+    'crispy_bootstrap4',
     'adminsortable2',
     'polymorphic',
     'import_export',
+    'django_select2',
+    'djrichtextfield',
 ]
 
 DATABASES = {
@@ -144,11 +149,6 @@ STATIC_ROOT = BASE_DIR / 'static'
 STATIC_URL = '/static/'
 
 
-# session settings
-
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
-
-
 # impersonate settings
 
 IMPERSONATE = {
@@ -165,6 +165,9 @@ IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'view'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+# Rich text editor settings
+
+DJRICHTEXTFIELD_CONFIG = defaults.richtextfield_config(LANGUAGE_CODE)
 
 # juntagrico settings
 
