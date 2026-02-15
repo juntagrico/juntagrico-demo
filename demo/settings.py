@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'demo',
     'juntagrico_billing',
     'juntagrico',
-    'fontawesomefree',
     'impersonate',
     'crispy_forms',
     'crispy_bootstrap4',
