@@ -196,4 +196,8 @@ FROM_FILTER = {
     'replacement_from': 'info@fubatja.ch'
 }
 
+# Use time zone Zurich for the time
+USE_TZ = True
+TIME_ZONE = 'Europe/Zurich'
+
 ASSIGNMENT_UNIT = "HOURS"
