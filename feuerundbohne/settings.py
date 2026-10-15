@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.apps.JuntagricoAdminConfig',
+    'juntagrico.apps.JuntagricoAdminConfig',
     'feuerundbohne',
     'juntagrico_assignment_request',
     'juntagrico',
