@@ -4,6 +4,7 @@ Django settings for feuerundbohne project.
 
 import os
 from pathlib import Path
+from juntagrico import defaults
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,16 +26,18 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
+    'django.apps.JuntagricoAdminConfig',
     'feuerundbohne',
     'juntagrico_assignment_request',
     'juntagrico',
-    'fontawesomefree',  # benötigt ab 1.6
     'import_export',  # benötigt ab 1.6
     'impersonate',
     'crispy_forms',
     'adminsortable2',
     'polymorphic',
+    'crispy_bootstrap4',
+    'django_select2',
+    'djrichtextfield',
 ]
 
 ROOT_URLCONF = 'feuerundbohne.urls'
@@ -79,6 +82,7 @@ WSGI_APPLICATION = 'feuerundbohne.wsgi.application'
 
 
 LANGUAGE_CODE = 'de'
+DJRICHTEXTFIELD_CONFIG = defaults.richtextfield_config(LANGUAGE_CODE)
 
 SITE_ID = 1
 
@@ -116,8 +120,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('JUNTAGRICO_EMAIL_PASSWORD')
 EMAIL_PORT = int(os.environ.get('JUNTAGRICO_EMAIL_PORT', '25' ))
 EMAIL_USE_TLS = os.environ.get('JUNTAGRICO_EMAIL_TLS', 'False')=='True'
 EMAIL_USE_SSL = os.environ.get('JUNTAGRICO_EMAIL_SSL', 'False')=='True'
-
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+EMAIL_BACKEND='juntagrico.backends.email.EmailBackend'
 
 
 STATIC_ROOT = BASE_DIR / 'static'
