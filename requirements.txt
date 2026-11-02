@@ -2,4 +2,3 @@ git+https://github.com/juntagrico/juntagrico.git@releases/2.1
 juntagrico-billing~=2.0.0
 gunicorn==25.1.0
 psycopg>=3.1.8
-requests  # hotfix: github.com/juntagrico/juntagrico-billing/pull/80
