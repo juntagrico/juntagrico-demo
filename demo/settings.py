@@ -6,10 +6,6 @@ from pathlib import Path
 
 from juntagrico import defaults
 
-import logging
-logger = logging.getLogger('django.security.csrf')
-logger.setLevel(logging.DEBUG)
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('JUNTAGRICO_SECRET_KEY')
@@ -40,6 +36,11 @@ LOGGING = {
         '': {
             'handlers': ['console'],
             'level': 'WARNING',
+        },
+        'django.security.csrf': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     },
 }
