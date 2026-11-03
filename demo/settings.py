@@ -234,10 +234,3 @@ TEST_MODE = os.environ.get("JUNTAGRICO_TEST_MODE", 'False')=='True'
 
 if TEST_MODE:
     INSTALLED_APPS.append('testmode')
-
-
-# Staging
-if os.environ.get('JUNTAGRICO_STAGING') == '1':
-    # staging URL erlauben
-    if not DEBUG:
-        ALLOWED_HOSTS.append('demo-staging.juntagrico.app')
