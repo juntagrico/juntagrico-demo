@@ -1,2 +1,3 @@
 git+https://github.com/juntagrico/juntagrico.git@releases/2.1
 juntagrico-billing~=2.0.1
+gunicorn==25.1.0
