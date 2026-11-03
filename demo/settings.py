@@ -12,8 +12,8 @@ SECRET_KEY = os.environ.get('JUNTAGRICO_SECRET_KEY')
 
 DEBUG = os.environ.get("JUNTAGRICO_DEBUG", 'False')=='True'
 
-if not DEBUG:
-    ALLOWED_HOSTS = os.environ.get('JUNTAGRICO_DOMAINS', '').split(',')
+if allowed_hosts := os.environ.get('JUNTAGRICO_DOMAINS', False):
+    ALLOWED_HOSTS = allowed_hosts.split(',')
 
 ADMINS = (
     ('Admin', os.environ.get('JUNTAGRICO_ADMIN_EMAIL')),
