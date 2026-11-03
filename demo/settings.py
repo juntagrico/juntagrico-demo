@@ -12,8 +12,8 @@ SECRET_KEY = os.environ.get('JUNTAGRICO_SECRET_KEY')
 
 DEBUG = os.environ.get("JUNTAGRICO_DEBUG", 'False')=='True'
 
-if not DEBUG:
-    ALLOWED_HOSTS = ['demo.juntagrico.app', 'test.juntagrico.science']
+if allowed_hosts := os.environ.get('JUNTAGRICO_DOMAINS', False):
+    ALLOWED_HOSTS = allowed_hosts.split(',')
 
 ADMINS = (
     ('Admin', os.environ.get('JUNTAGRICO_ADMIN_EMAIL')),
@@ -228,10 +228,3 @@ TEST_MODE = os.environ.get("JUNTAGRICO_TEST_MODE", 'False')=='True'
 
 if TEST_MODE:
     INSTALLED_APPS.append('testmode')
-
-
-# Staging
-if os.environ.get('JUNTAGRICO_STAGING') == '1':
-    # staging URL erlauben
-    if not DEBUG:
-        ALLOWED_HOSTS.append('demo-staging.juntagrico.app')
