@@ -37,11 +37,6 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'WARNING',
         },
-        'django.security.csrf': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
     },
 }
 
